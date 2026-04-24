@@ -5,7 +5,7 @@ numpy
 pandas
 joblib
 scikit-learn
-torch
 pymatgen
 mendeleev
+torch==2.2.2
 torch-geometric
