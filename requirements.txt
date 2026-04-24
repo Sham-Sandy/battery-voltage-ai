@@ -1,0 +1,11 @@
+flask
+flask-cors
+gunicorn
+numpy
+pandas
+joblib
+scikit-learn
+torch
+pymatgen
+mendeleev
+torch-geometric
