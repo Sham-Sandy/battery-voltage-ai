@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Battery Voltage Predictor</title>
+<link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<div class="box">
+
+<h1>⚡ Battery Voltage Predictor</h1>
+<p class="subtitle">HTGNN-Based Electrode Voltage Estimation</p>
+
+<input type="text" id="formula" placeholder="Enter Formula">
+
+<label class="upload-btn">
+📁 Upload CIF File
+<input type="file" id="cif" hidden>
+</label>
+
+<button onclick="predictVoltage()">⚡ Predict Voltage</button>
+
+<div id="resultCard" class="result-card">
+<h2 id="result">Awaiting Prediction...</h2>
+<p id="status"></p>
+</div>
+
+</div>
+
+<script>
+async function predictVoltage(){
+
+let formula=document.getElementById("formula").value;
+let file=document.getElementById("cif").files[0];
+
+if(!formula || !file){
+document.getElementById("result").innerHTML="Enter formula + upload CIF";
+return;
+}
+
+document.getElementById("result").innerHTML="⏳ Running HTGNN Model...";
+document.getElementById("status").innerHTML="Please wait";
+
+let formData=new FormData();
+formData.append("formula",formula);
+formData.append("cif",file);
+
+let res=await fetch("/predict",{
+method:"POST",
+body:formData
+});
+
+let data=await res.json();
+
+document.getElementById("result").innerHTML=
+"🔋 " + data.voltage + " V";
+
+if(data.voltage > 4){
+document.getElementById("status").innerHTML="High Voltage Candidate";
+}
+else if(data.voltage > 3){
+document.getElementById("status").innerHTML="Moderate Stable Electrode";
+}
+else{
+document.getElementById("status").innerHTML="Low Voltage Material";
+}
+
+}
+</script>
+
+</body>
+</html>
