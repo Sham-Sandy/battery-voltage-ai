@@ -1,11 +1,9 @@
-flask
-flask-cors
-gunicorn
+gradio
+torch
+torch-geometric
 numpy
 pandas
 joblib
 scikit-learn
 pymatgen
 mendeleev
-torch==2.2.2
-torch-geometric
